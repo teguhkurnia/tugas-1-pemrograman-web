@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Pengiriman | Sistem Pemesanan Bahan Ajar UT</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/tracking.css">
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-ut">
+                <img src="img/logo_ut.png" alt="Logo UT">
+            </div>
+            <div class="brand">
+                <h2>Portal UT</h2>
+                <span>Bahan Ajar</span>
+            </div>
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="dashboard.html"><i class='bx bx-grid-alt'></i> <span>Dashboard Utama</span></a>
+            </li>
+            <li>
+                <a href="stock.html"><i class='bx bx-book-open'></i> <span>Informasi Bahan Ajar</span></a>
+            </li>
+            <li class="active">
+                <a href="tracking.html"><i class='bx bx-bus'></i> <span>Tracking Pengiriman</span></a>
+            </li>
+
+            <li class="nav-group">
+                <div class="nav-title">Laporan</div>
+                <ul>
+                    <li><a href="#"><i class='bx bx-line-chart'></i> <span>Monitoring Progress DO</span></a></li>
+                    <li><a href="#"><i class='bx bx-data'></i> <span>Rekap Bahan Ajar</span></a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#"><i class='bx bx-history'></i> <span>Histori Transaksi</span></a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="#" id="logoutBtn" class="logout"><i class='bx bx-log-out'></i> <span>Keluar Sistem</span></a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Top Navigation / Header -->
+        <header class="topbar">
+            <div class="greeting-box">
+                <h1>Lacak Pengiriman (*resi)</h1>
+                <p>Pantau rute logistik distribusi bahan ajar Universitas Terbuka</p>
+            </div>
+
+            <div class="profile-area">
+                <div class="profile-info">
+                    <strong id="userName">User Name</strong>
+                    <span id="userRole">Role - Lokasi</span>
+                </div>
+                <div class="profile-avatar">
+                    <i class='bx bxs-user-circle'></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Search Bar Section -->
+        <section class="search-section">
+            <div class="search-card">
+                <h2>Cari Status Pengiriman DO (Delivery Order)</h2>
+                <p>Masukkan nomor Resi atau Nomor DO untuk melihat status terbaru paket mahasiswa Anda.</p>
+
+                <form id="trackingForm" class="search-form">
+                    <div class="search-input-wrapper">
+                        <i class='bx bx-search-alt'></i>
+                        <input type="text" id="doNumber" placeholder="Contoh: 2023001234 atau 2023005678" required>
+                        <button type="submit" class="btn-search">
+                            <span>Lacak Paket</span>
+                        </button>
+                    </div>
+                </form>
+                <div id="errorMessage" class="error-msg" style="display: none;">
+                    Nomor DO tidak dapat ditemukan di dalam sistem!
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracking Result Section (Hidden until searched) -->
+        <section id="trackingResult" class="tracking-result-section" style="display: none;">
+
+            <div class="tracking-grid">
+                <!-- Data Detail DO -->
+                <div class="detail-card">
+                    <div class="card-header">
+                        <h3><i class='bx bx-receipt'></i> Informasi Pemesanan</h3>
+                        <span id="lblStatus" class="badge">Status</span>
+                    </div>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="label">Penerima (Mahasiswa)</span>
+                            <span class="value" id="lblNama"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Nomor DO</span>
+                            <span class="value" id="lblNoDO"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Kurir Ekspedisi</span>
+                            <span class="value" id="lblEkspedisi"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Tanggal Kirim</span>
+                            <span class="value" id="lblTanggal"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Kode Lokasi/Paket</span>
+                            <span class="value" id="lblPaket"></span>
+                        </div>
+                        <div class="info-item highlight-total">
+                            <span class="label">Total Pembayaran DO</span>
+                            <strong class="value" id="lblTotal"></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress & Timeline -->
+                <div class="timeline-card">
+                    <div class="card-header">
+                        <h3><i class='bx bx-map-alt'></i> Perjalanan Paket</h3>
+                    </div>
+
+                    <!-- Progress Stepper -->
+                    <div class="stepper-wrapper" id="stepperContainer">
+                        <div class="stepper-item active">
+                            <div class="step-counter"><i class='bx bx-package'></i></div>
+                            <div class="step-name">Dikemas</div>
+                        </div>
+                        <div class="stepper-item active">
+                            <div class="step-counter"><i class='bx bx-log-out-circle'></i></div>
+                            <div class="step-name">Dikirim</div>
+                        </div>
+                        <div class="stepper-item" id="stepTransit">
+                            <div class="step-counter"><i class='bx bx-bus'></i></div>
+                            <div class="step-name">Transit</div>
+                        </div>
+                        <div class="stepper-item" id="stepDelivered">
+                            <div class="step-counter"><i class='bx bx-check'></i></div>
+                            <div class="step-name">Diterima</div>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Timeline -->
+                    <div class="timeline" id="timelineList">
+                        <!-- Items injected here by javascript -->
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/tracking.js"></script>
+</body>
+
+</html>
