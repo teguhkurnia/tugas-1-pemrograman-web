@@ -18,7 +18,6 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-
 .logo-ut img {
     width: 42px;
     height: 42px;
@@ -61,12 +60,12 @@
 }
 
 .nav-links li a:hover,
-.nav-links li.active>a {
+.nav-links li.active > a {
     background-color: var(--primary-light);
     color: var(--primary);
 }
 
-.nav-links li.active>a {
+.nav-links li.active > a {
     font-weight: 600;
 }
 
@@ -93,7 +92,6 @@
     list-style: none;
     padding-left: 0.75rem;
 }
-
 
 .sidebar-footer {
     padding: 1.5rem;
@@ -197,7 +195,9 @@
     gap: 1.5rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
     border: 1px solid var(--border-color);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
 }
 
 .card:hover {
@@ -309,6 +309,14 @@
 .badge.warning {
     background: var(--warning-bg);
     color: var(--warning);
+}
+.badge.info {
+    background: var(--info-bg);
+    color: var(--info);
+}
+.badge.error {
+    background: var(--error-bg);
+    color: var(--error);
 }
 
 /* ================== RESPONSIVE ================== */

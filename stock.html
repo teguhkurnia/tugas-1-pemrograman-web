@@ -1,171 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Informasi Stok Bahan Ajar | Sistem Pemesanan Bahan Ajar UT
+        </title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/global.css" />
+        <link rel="stylesheet" href="css/dashboard.css" />
+        <link rel="stylesheet" href="css/stock.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informasi Stok Bahan Ajar | Sistem Pemesanan Bahan Ajar UT</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/stock.css">
-</head>
-
-<body>
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo-ut">
-                <img src="img/logo_ut.png" alt="Logo UT">
-            </div>
-            <div class="brand">
-                <h2>Portal UT</h2>
-                <span>Bahan Ajar</span>
-            </div>
-        </div>
-
-        <ul class="nav-links">
-            <li>
-                <a href="dashboard.html"><i class='bx bx-grid-alt'></i> <span>Dashboard Utama</span></a>
-            </li>
-            <li class="active">
-                <a href="stock.html"><i class='bx bx-book-open'></i> <span>Informasi Bahan Ajar</span></a>
-            </li>
-            <li>
-                <a href="tracking.html"><i class='bx bx-bus'></i> <span>Tracking Pengiriman</span></a>
-            </li>
-
-            <li class="nav-group">
-                <div class="nav-title">Laporan</div>
-                <ul>
-                    <li><a href="#"><i class='bx bx-line-chart'></i> <span>Monitoring Progress DO</span></a></li>
-                    <li><a href="#"><i class='bx bx-data'></i> <span>Rekap Bahan Ajar</span></a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="#"><i class='bx bx-history'></i> <span>Histori Transaksi</span></a>
-            </li>
-        </ul>
-
-        <div class="sidebar-footer">
-            <a href="#" id="logoutBtn" class="logout"><i class='bx bx-log-out'></i> <span>Keluar Sistem</span></a>
-        </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="main-content">
-        <!-- Top Navigation / Header -->
-        <header class="topbar">
-            <div class="greeting-box">
-                <h1>Informasi Bahan Ajar</h1>
-                <p>Pantau jumlah ketersediaan stok modul dan bahan ajar UT-Daerah.</p>
-            </div>
-
-            <div class="profile-area">
-                <div class="profile-info">
-                    <strong id="userName">User Name</strong>
-                    <span id="userRole">Role - Lokasi</span>
+    <body>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-ut">
+                    <img src="img/logo_ut.png" alt="Logo UT" />
                 </div>
-                <div class="profile-avatar">
-                    <i class='bx bxs-user-circle'></i>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Stock Layout -->
-        <section class="stock-section">
-            <div class="panel-header">
-                <div class="panel-title">
-                    <h2><i class='bx bx-data'></i> Manajemen Stok Bahan Ajar</h2>
-                </div>
-                <div class="panel-actions">
-                    <button class="btn-tambah" id="btnTambahStock">
-                        <i class='bx bx-plus'></i> <span>Tambah Stok Baru</span>
-                    </button>
+                <div class="brand">
+                    <h2>Portal UT</h2>
+                    <span>Bahan Ajar</span>
                 </div>
             </div>
 
-            <!-- Table Container -->
-            <div class="table-container stock-table-wrapper">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Cover</th>
-                            <th>Kode & Nama Barang</th>
-                            <th>Kode Lokasi</th>
-                            <th>Jenis</th>
-                            <th>Edisi</th>
-                            <th>Total Stok</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBodyStok">
-                        <!-- Dimuat otomatis via Javascript -->
-                    </tbody>
-                </table>
+            <ul class="nav-links">
+                <li>
+                    <a href="dashboard.html"
+                        ><i class="bx bx-grid-alt"></i>
+                        <span>Dashboard Utama</span></a
+                    >
+                </li>
+                <li class="active">
+                    <a href="stock-vue.html"
+                        ><i class="bx bx-book-open"></i>
+                        <span>Informasi Bahan Ajar</span></a
+                    >
+                </li>
+                <li>
+                    <a href="tracking-vue.html"
+                        ><i class="bx bx-bus"></i>
+                        <span>Tracking Pengiriman</span></a
+                    >
+                </li>
+
+                <li class="nav-group">
+                    <div class="nav-title">Laporan</div>
+                    <ul>
+                        <li>
+                            <a href="#"
+                                ><i class="bx bx-line-chart"></i>
+                                <span>Monitoring Progress DO</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#"
+                                ><i class="bx bx-data"></i>
+                                <span>Rekap Bahan Ajar</span></a
+                            >
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"
+                        ><i class="bx bx-history"></i>
+                        <span>Histori Transaksi</span></a
+                    >
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="#" id="logoutBtn" class="logout"
+                    ><i class="bx bx-log-out"></i> <span>Keluar Sistem</span></a
+                >
             </div>
-        </section>
+        </aside>
 
-    </main>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="greeting-box">
+                    <h1>Informasi Bahan Ajar</h1>
+                    <p>
+                        Pantau jumlah ketersediaan stok modul dan bahan ajar
+                        UT-Daerah.
+                    </p>
+                </div>
 
-    <!-- Modal Form (Hidden by Default) -->
-    <div id="modalTambah" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Tambah Stok Bahan Ajar</h2>
-                <i class='bx bx-x modal-close' id="btnCloseModal"></i>
-            </div>
-            <div class="modal-body">
-                <form id="formTambahStok">
-                    <div class="form-grid">
-                        <div class="input-group">
-                            <label>Kode Barang (Mata Kuliah)</label>
-                            <input type="text" id="inKodeBarang" placeholder="Misal: HKUM4201" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Nama Barang (Modul)</label>
-                            <input type="text" id="inNamaBarang" placeholder="Misal: Hukum Tata Negara" required>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Kode Lokasi Gudang (UPBJJ)</label>
-                            <input type="text" id="inKodeLokasi" placeholder="Misal: 0SBY01" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Jenis Barang</label>
-                            <select id="inJenisBarang" required>
-                                <option value="BMP">BMP (Buku Materi Pokok)</option>
-                                <option value="Non-BMP">Non-BMP</option>
-                                <option value="Suplemen">Suplemen</option>
-                            </select>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Edisi Cetak</label>
-                            <input type="number" id="inEdisi" min="1" placeholder="Misal: 1" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Total Stok Fisik</label>
-                            <input type="number" id="inStok" min="0" placeholder="Misal: 150" required>
-                        </div>
+                <div class="profile-area">
+                    <div class="profile-info">
+                        <strong id="userName">User Name</strong>
+                        <span id="userRole">Role - Lokasi</span>
                     </div>
-                    <div class="modal-actions">
-                        <button type="button" class="btn-secondary" id="btnBatal">Batal</button>
-                        <button type="submit" class="btn-primary">Simpan Data</button>
+                    <div class="profile-avatar">
+                        <i class="bx bxs-user-circle"></i>
                     </div>
-                </form>
+                </div>
+            </header>
+
+            <section class="stock-section">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <h2>
+                            <i class="bx bx-data"></i> Manajemen Stok Bahan Ajar
+                        </h2>
+                    </div>
+                    <div class="panel-actions">
+                        <button class="btn-tambah" id="btnTambahStock">
+                            <i class="bx bx-plus"></i>
+                            <span>Tambah Stok Baru</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container stock-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Cover</th>
+                                <th>Kode & Nama Barang</th>
+                                <th>Kode Lokasi</th>
+                                <th>Jenis</th>
+                                <th>Edisi</th>
+                                <th>Total Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBodyStok"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <div id="modalTambah" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Tambah Stok Bahan Ajar</h2>
+                    <i class="bx bx-x modal-close" id="btnCloseModal"></i>
+                </div>
+                <div class="modal-body">
+                    <form id="formTambahStok">
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label>Kode Barang (Mata Kuliah)</label>
+                                <input
+                                    type="text"
+                                    id="inKodeBarang"
+                                    placeholder="Misal: HKUM4201"
+                                    required
+                                />
+                            </div>
+                            <div class="input-group">
+                                <label>Nama Barang (Modul)</label>
+                                <input
+                                    type="text"
+                                    id="inNamaBarang"
+                                    placeholder="Misal: Hukum Tata Negara"
+                                    required
+                                />
+                            </div>
+
+                            <div class="input-group">
+                                <label>Kode Lokasi Gudang (UPBJJ)</label>
+                                <input
+                                    type="text"
+                                    id="inKodeLokasi"
+                                    placeholder="Misal: 0SBY01"
+                                    required
+                                />
+                            </div>
+                            <div class="input-group">
+                                <label>Jenis Barang</label>
+                                <select id="inJenisBarang" required>
+                                    <option value="BMP">
+                                        BMP (Buku Materi Pokok)
+                                    </option>
+                                    <option value="Non-BMP">Non-BMP</option>
+                                    <option value="Suplemen">Suplemen</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Edisi Cetak</label>
+                                <input
+                                    type="number"
+                                    id="inEdisi"
+                                    min="1"
+                                    placeholder="Misal: 1"
+                                    required
+                                />
+                            </div>
+                            <div class="input-group">
+                                <label>Total Stok Fisik</label>
+                                <input
+                                    type="number"
+                                    id="inStok"
+                                    min="0"
+                                    placeholder="Misal: 150"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button
+                                type="button"
+                                class="btn-secondary"
+                                id="btnBatal"
+                            >
+                                Batal
+                            </button>
+                            <button type="submit" class="btn-primary">
+                                Simpan Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Scripts -->
-    <script src="js/data.js"></script>
-    <script src="js/stock.js"></script>
-</body>
-
+        <script src="js/data.js"></script>
+        <script src="js/stock.js"></script>
+    </body>
 </html>

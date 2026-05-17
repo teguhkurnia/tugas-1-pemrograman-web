@@ -1,102 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Portal Login Sistem Informasi Pemesanan Bahan Ajar Universitas Terbuka untuk seluruh UT-Daerah."
+        />
+        <title>Portal UT-Daerah | Pemesanan Bahan Ajar</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/global.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Portal Login Sistem Informasi Pemesanan Bahan Ajar Universitas Terbuka untuk seluruh UT-Daerah.">
-    <title>Portal UT-Daerah | Pemesanan Bahan Ajar</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <!-- Boxicons for modern icons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-    <div class="split-layout">
-        <!-- Panel Visual (Kiri) -->
-        <div class="left-panel">
-            <div class="overlay"></div>
-            <div class="content">
-                <div class="logo">
-                    <div class="logo-ut">
-                        <img src="img/logo_ut.png" alt="Logo UT">
+    <body>
+        <div class="split-layout">
+            <div class="left-panel">
+                <div class="overlay"></div>
+                <div class="content">
+                    <div class="logo">
+                        <div class="logo-ut">
+                            <img src="img/logo_ut.png" alt="Logo UT" />
+                        </div>
+                        <span>Universitas Terbuka</span>
                     </div>
-                    <span>Universitas Terbuka</span>
+                    <h1>Sistem Informasi Pemesanan Bahan Ajar.</h1>
+                    <p>
+                        Akses portal terpadu untuk UT-Daerah guna mengelola,
+                        memantau, dan mendistribusikan bahan ajar ke seluruh
+                        wilayah Nusantara. Bersama Membangun Bangsa.
+                    </p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h3>39</h3>
+                            <p>Kantor UT-Daerah</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>100%</h3>
+                            <p>Layanan Digital</p>
+                        </div>
+                    </div>
                 </div>
-                <h1>Sistem Informasi Pemesanan Bahan Ajar.</h1>
-                <p>Akses portal terpadu untuk UT-Daerah guna mengelola, memantau, dan mendistribusikan bahan ajar ke
-                    seluruh wilayah Nusantara. Bersama Membangun Bangsa.</p>
-                <div class="stats">
-                    <div class="stat-item">
-                        <h3>39</h3>
-                        <p>Kantor UT-Daerah</p>
+            </div>
+
+            <div class="right-panel">
+                <div class="login-container">
+                    <div class="login-header">
+                        <h2>Selamat Datang</h2>
+                        <p>Silakan masuk ke akun UT-Daerah Anda</p>
                     </div>
-                    <div class="stat-item">
-                        <h3>100%</h3>
-                        <p>Layanan Digital</p>
+
+                    <form id="loginForm" class="login-form">
+                        <div class="input-group">
+                            <label for="username">Email Administrator</label>
+                            <div class="input-field">
+                                <i class="bx bx-user"></i>
+                                <input
+                                    type="email"
+                                    id="username"
+                                    placeholder="Masukkan Email Anda"
+                                    required
+                                    autocomplete="username"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="password">Kata Sandi</label>
+                            <div class="input-field">
+                                <i class="bx bx-lock-alt"></i>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Masukkan Kata Sandi"
+                                    required
+                                    autocomplete="current-password"
+                                />
+                                <i
+                                    class="bx bx-show toggle-password"
+                                    title="Tampilkan/Sembunyikan Sandi"
+                                ></i>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <label class="remember-me">
+                                <input type="checkbox" id="remember" />
+                                <span>Ingat saya</span>
+                            </label>
+                            <a href="#" class="forgot-password"
+                                >Lupa Kata Sandi?</a
+                            >
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <span>Masuk Sekarang</span>
+                            <i class="bx bx-right-arrow-alt"></i>
+                        </button>
+                    </form>
+
+                    <div class="login-footer">
+                        <p>
+                            &copy; 2026 Universitas Terbuka.<br />Sistem
+                            Informasi Pemesanan Bahan Ajar.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Panel Interaktif Form (Kanan) -->
-        <div class="right-panel">
-            <div class="login-container">
-                <div class="login-header">
-                    <h2>Selamat Datang</h2>
-                    <p>Silakan masuk ke akun UT-Daerah Anda</p>
-                </div>
-
-                <form id="loginForm" class="login-form">
-                    <div class="input-group">
-                        <label for="username">Email Administrator</label>
-                        <div class="input-field">
-                            <i class='bx bx-user'></i>
-                            <input type="email" id="username" placeholder="Masukkan Email Anda" required
-                                autocomplete="username">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label for="password">Kata Sandi</label>
-                        <div class="input-field">
-                            <i class='bx bx-lock-alt'></i>
-                            <input type="password" id="password" placeholder="Masukkan Kata Sandi" required
-                                autocomplete="current-password">
-                            <i class='bx bx-show toggle-password' title="Tampilkan/Sembunyikan Sandi"></i>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <label class="remember-me">
-                            <input type="checkbox" id="remember">
-                            <span>Ingat saya</span>
-                        </label>
-                        <a href="#" class="forgot-password">Lupa Kata Sandi?</a>
-                    </div>
-
-                    <button type="submit" class="btn-primary">
-                        <span>Masuk Sekarang</span>
-                        <i class='bx bx-right-arrow-alt'></i>
-                    </button>
-                </form>
-
-                <div class="login-footer">
-                    <p>&copy; 2026 Universitas Terbuka.<br>Sistem Informasi Pemesanan Bahan Ajar.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Data & Custom JavaScript -->
-    <script src="js/data.js"></script>
-    <script src="js/script.js"></script>
-</body>
-
+        <script src="js/data.js"></script>
+        <script src="js/script.js"></script>
+    </body>
 </html>

@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Informasi Stok Bahan Ajar | Sistem Pemesanan Bahan Ajar UT
+        </title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/global.css" />
+        <link rel="stylesheet" href="css/dashboard.css" />
+        <link rel="stylesheet" href="css/stock.css" />
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-ut">
+                        <img src="img/logo_ut.png" alt="Logo UT" />
+                    </div>
+                    <div class="brand">
+                        <h2>Portal UT</h2>
+                        <span>Bahan Ajar</span>
+                    </div>
+                </div>
+
+                <ul class="nav-links">
+                    <li>
+                        <a href="dashboard.html"
+                            ><i class="bx bx-grid-alt"></i>
+                            <span>Dashboard Utama</span></a
+                        >
+                    </li>
+                    <li class="active">
+                        <a href="stock-vue.html"
+                            ><i class="bx bx-book-open"></i>
+                            <span>Informasi Bahan Ajar</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="tracking-vue.html"
+                            ><i class="bx bx-bus"></i>
+                            <span>Tracking Pengiriman</span></a
+                        >
+                    </li>
+
+                    <li class="nav-group">
+                        <div class="nav-title">Laporan</div>
+                        <ul>
+                            <li>
+                                <a href="#"
+                                    ><i class="bx bx-line-chart"></i>
+                                    <span>Monitoring Progress DO</span></a
+                                >
+                            </li>
+                            <li>
+                                <a href="#"
+                                    ><i class="bx bx-data"></i>
+                                    <span>Rekap Bahan Ajar</span></a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"
+                            ><i class="bx bx-history"></i>
+                            <span>Histori Transaksi</span></a
+                        >
+                    </li>
+                </ul>
+
+                <div class="sidebar-footer">
+                    <a href="#" id="logoutBtn" class="logout"
+                        ><i class="bx bx-log-out"></i>
+                        <span>Keluar Sistem</span></a
+                    >
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <header class="topbar">
+                    <div class="greeting-box">
+                        <h1>Informasi Bahan Ajar</h1>
+                        <p>
+                            Pantau jumlah ketersediaan stok modul dan bahan ajar
+                            UT-Daerah.
+                        </p>
+                    </div>
+
+                    <div class="profile-area">
+                        <div class="profile-info">
+                            <strong id="userName">User Name</strong>
+                            <span id="userRole">Role - Lokasi</span>
+                        </div>
+                        <div class="profile-avatar">
+                            <i class="bx bxs-user-circle"></i>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="stock-section">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <h2>
+                                <i class="bx bx-data"></i> Manajemen Stok Bahan
+                                Ajar
+                            </h2>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn-tambah" @click="openAddModal()">
+                                <i class="bx bx-plus"></i>
+                                <span>Tambah Stok Baru</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Section -->
+                    <div class="filter-section">
+                        <div class="filter-header">
+                            <h3><i class="bx bx-filter"></i> Filter & Sort</h3>
+                            <button
+                                class="btn-reset"
+                                @click="resetFilters()"
+                                v-if="filters.upbjj || filters.kategori || filters.reorderWarning || sortBy"
+                            >
+                                <i class="bx bx-reset"></i>
+                                <span>Reset Filter</span>
+                            </button>
+                        </div>
+
+                        <div class="filter-grid">
+                            <div class="filter-group">
+                                <label>UT-Daerah</label>
+                                <select
+                                    v-model="filters.upbjj"
+                                    class="filter-select"
+                                >
+                                    <option value="">
+                                        -- Semua UT-Daerah --
+                                    </option>
+                                    <option
+                                        v-for="upbjj in upbjjList"
+                                        :key="upbjj"
+                                        :value="upbjj"
+                                    >
+                                        {{ upbjj }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group" v-if="filters.upbjj">
+                                <label>Kategori Mata Kuliah</label>
+                                <select
+                                    v-model="filters.kategori"
+                                    class="filter-select"
+                                    :disabled="!filters.upbjj"
+                                >
+                                    <option value="">
+                                        -- Semua Kategori --
+                                    </option>
+                                    <option
+                                        v-for="kategori in kategoriList"
+                                        :key="kategori"
+                                        :value="kategori"
+                                    >
+                                        {{ kategori }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        v-model="filters.reorderWarning"
+                                    />
+                                    <span>
+                                        <i class="bx bx-info-circle"></i>
+                                        Tampilkan yang perlu reorder
+                                    </span>
+                                </label>
+                                <small
+                                    >Menampilkan stok = 0 atau stok < safety
+                                    stok</small
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container stock-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <button
+                                            class="th-sort-btn"
+                                            :class="{ 'active': sortBy === 'judul' }"
+                                            @click="handleSort('judul')"
+                                            title="Klik untuk sort"
+                                        >
+                                            Kode & Nama Barang
+                                            <i
+                                                v-if="sortBy === 'judul'"
+                                                class="bx"
+                                                :class="{
+                                                    'bx-sort-up': sortOrder === 'asc',
+                                                    'bx-sort-down': sortOrder === 'desc'
+                                                }"
+                                            ></i>
+                                        </button>
+                                    </th>
+                                    <th>Kategori</th>
+                                    <th>UT Daerah</th>
+                                    <th>Lokasi Rak</th>
+                                    <th>
+                                        <button
+                                            class="th-sort-btn"
+                                            :class="{ 'active': sortBy === 'qty' }"
+                                            @click="handleSort('qty')"
+                                            title="Klik untuk sort"
+                                        >
+                                            Total Stok
+                                            <i
+                                                v-if="sortBy === 'qty'"
+                                                class="bx"
+                                                :class="{
+                                                    'bx-sort-up': sortOrder === 'asc',
+                                                    'bx-sort-down': sortOrder === 'desc'
+                                                }"
+                                            ></i>
+                                        </button>
+                                    </th>
+                                    <th>
+                                        <button
+                                            class="th-sort-btn"
+                                            :class="{ 'active': sortBy === 'harga' }"
+                                            @click="handleSort('harga')"
+                                            title="Klik untuk sort"
+                                        >
+                                            Harga
+                                            <i
+                                                v-if="sortBy === 'harga'"
+                                                class="bx"
+                                                :class="{
+                                                    'bx-sort-up': sortOrder === 'asc',
+                                                    'bx-sort-down': sortOrder === 'desc'
+                                                }"
+                                            ></i>
+                                        </button>
+                                    </th>
+                                    <th>Catatan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyStok">
+                                <tr v-for="item in sortedData">
+                                    <td>
+                                        <div class="book-title">
+                                            <strong>{{ item.kode }}</strong>
+                                            <span>{{ item.judul }}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge"
+                                            :class="{
+                                                'success': item.kategori === 'MK Wajib',
+                                                'warning': item.kategori === 'MK Pilihan',
+                                                'info': item.kategori === 'Praktikum'
+                                            }"
+                                        >
+                                            {{ item.kategori }}
+                                        </span>
+                                    </td>
+                                    <td>{{ item.upbjj }}</td>
+                                    <td>{{ item.lokasiRak }}</td>
+                                    <td>
+                                        <span
+                                            class="badge"
+                                            :class="{
+                                               'success': item.qty > item.safety,
+                                               'error': item.qty === 0,
+                                               'warning': item.qty > 0 && item.qty <= item.safety,
+                                           }"
+                                        >
+                                            {{ item.qty }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        Rp {{ item.harga.toLocaleString('id-ID')
+                                        }}
+                                    </td>
+                                    <td v-html="item.catatanHTML"></td>
+                                    <td>
+                                        <button
+                                            class="btn-edit"
+                                            @click="openEditModal(item)"
+                                        >
+                                            <i class="bx bx-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+
+            <div
+                id="modalTambah"
+                class="modal-overlay"
+                :class="{ 'show': openModal }"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Tambah Stok Bahan Ajar</h2>
+                        <i
+                            class="bx bx-x modal-close"
+                            @click="closeModal()"
+                        ></i>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formTambahStok" @submit.prevent="saveItem()">
+                            <div class="form-grid">
+                                <div class="input-group">
+                                    <label>Kode Barang (Mata Kuliah)</label>
+                                    <input
+                                        type="text"
+                                        id="inKodeBarang"
+                                        placeholder="Misal: EKMA4116"
+                                        required
+                                        v-model="form.kode"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label>Nama Barang (Modul)</label>
+                                    <input
+                                        type="text"
+                                        id="inNamaBarang"
+                                        placeholder="Misal: Pengantar Manajemen"
+                                        required
+                                        v-model="form.judul"
+                                    />
+                                </div>
+
+                                <div class="input-group">
+                                    <label>UT Daerah (UPBJJ)</label>
+                                    <input
+                                        type="text"
+                                        id="inUpbjj"
+                                        placeholder="Misal: Jakarta"
+                                        required
+                                        v-model="form.upbjj"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label>Lokasi Rak</label>
+                                    <input
+                                        type="text"
+                                        id="inLokasiRak"
+                                        placeholder="Misal: R1-A3"
+                                        required
+                                        v-model="form.lokasiRak"
+                                    />
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Kategori</label>
+                                    <select
+                                        id="inKategori"
+                                        required
+                                        v-model="form.kategori"
+                                    >
+                                        <option value="">
+                                            -- Pilih Kategori --
+                                        </option>
+                                        <option value="MK Wajib">
+                                            MK Wajib
+                                        </option>
+                                        <option value="MK Pilihan">
+                                            MK Pilihan
+                                        </option>
+                                        <option value="Praktikum">
+                                            Praktikum
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label>Harga (Rp)</label>
+                                    <input
+                                        type="number"
+                                        id="inHarga"
+                                        min="0"
+                                        placeholder="Misal: 65000"
+                                        required
+                                        v-model.number="form.harga"
+                                    />
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Total Stok</label>
+                                    <input
+                                        type="number"
+                                        id="inQty"
+                                        min="0"
+                                        placeholder="Misal: 150"
+                                        required
+                                        v-model.number="form.qty"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label>Safety Stok</label>
+                                    <input
+                                        type="number"
+                                        id="inSafety"
+                                        min="0"
+                                        placeholder="Misal: 20"
+                                        required
+                                        v-model.number="form.safety"
+                                    />
+                                </div>
+
+                                <div class="input-group full-width">
+                                    <label>Catatan</label>
+                                    <textarea
+                                        id="inCatatan"
+                                        placeholder="Misal: Edisi 2024, cetak ulang"
+                                        v-model="form.catatanHTML"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-actions">
+                                <button
+                                    type="button"
+                                    class="btn-secondary"
+                                    id="btnBatal"
+                                    @click="closeModal()"
+                                >
+                                    Batal
+                                </button>
+                                <button type="submit" class="btn-primary">
+                                    Simpan Data
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/stock.vue.js"></script>
+    </body>
+</html>

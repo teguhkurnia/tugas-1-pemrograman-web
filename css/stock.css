@@ -1,3 +1,7 @@
+#app {
+    width: 100%;
+}
+
 .stock-section {
     margin-bottom: 2rem;
 }
@@ -44,6 +48,39 @@
     box-shadow: 0 6px 15px rgba(0, 61, 165, 0.3);
 }
 
+/* Table Header Sort Button */
+.th-sort-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.th-sort-btn:hover {
+    color: var(--primary);
+}
+
+.th-sort-btn.active {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.th-sort-btn i {
+    font-size: 0.9rem;
+    min-width: 1rem;
+}
 
 .stock-table-wrapper {
     overflow-x: auto;
@@ -69,15 +106,14 @@
     display: block;
 }
 
-
 .cover-wrapper img[src=""],
 .cover-wrapper img:not([src]) {
     opacity: 0;
 }
 
 .cover-wrapper::after {
-    content: '\\eb15';
-    font-family: 'boxicons';
+    content: "\\eb15";
+    font-family: "boxicons";
     position: absolute;
     font-size: 1.5rem;
     color: #94a3b8;
@@ -184,7 +220,6 @@
     gap: 1.25rem;
 }
 
-
 .form-grid .input-group:nth-child(2) {
     grid-column: span 2;
 }
@@ -202,18 +237,36 @@
 }
 
 .input-group input,
-.input-group select {
+.input-group select,
+.input-group textarea {
     padding: 0.9rem;
     border: 2px solid var(--border-color);
     border-radius: 10px;
     font-size: 0.95rem;
     transition: border-color 0.2s;
     outline: none;
+    font-family: inherit;
 }
 
 .input-group input:focus,
-.input-group select:focus {
+.input-group select:focus,
+.input-group textarea:focus {
     border-color: var(--primary);
+}
+
+.input-group textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+    color: var(--text-main);
+}
+
+.input-group textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.input-group.full-width {
+    grid-column: span 2;
 }
 
 .modal-actions {
@@ -253,6 +306,191 @@
 
 .btn-primary:hover {
     background: var(--primary-hover);
+}
+
+/* Filter Section Styling */
+.filter-section {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.filter-header h3 {
+    font-size: 1rem;
+    color: var(--text-main);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-header h3 i {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.btn-reset {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--warning);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-reset:hover {
+    background: #ff9800;
+    transform: translateY(-2px);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.filter-select {
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    outline: none;
+}
+
+.filter-select:hover {
+    border-color: var(--primary-light);
+}
+
+.filter-select:focus {
+    border-color: var(--primary);
+}
+
+.filter-select:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Checkbox Styling */
+.checkbox-group {
+    gap: 0.25rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.checkbox-label span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.checkbox-label span i {
+    color: var(--warning);
+    font-size: 1rem;
+}
+
+.checkbox-group small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: 2rem;
+}
+
+/* Sort Buttons */
+.sort-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn-sort {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-sort:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.btn-sort.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.btn-sort i {
+    font-size: 1rem;
+}
+
+/* Price Cell Styling */
+.price-cell {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 @media (max-width: 600px) {

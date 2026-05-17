@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tracking Pengiriman | Sistem Pemesanan Bahan Ajar UT</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/global.css" />
+        <link rel="stylesheet" href="css/dashboard.css" />
+        <link rel="stylesheet" href="css/tracking.css" />
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo-ut">
+                        <img src="img/logo_ut.png" alt="Logo UT" />
+                    </div>
+                    <div class="brand">
+                        <h2>Portal UT</h2>
+                        <span>Bahan Ajar</span>
+                    </div>
+                </div>
+
+                <ul class="nav-links">
+                    <li>
+                        <a href="dashboard.html"
+                            ><i class="bx bx-grid-alt"></i>
+                            <span>Dashboard Utama</span></a
+                        >
+                    </li>
+                    <li>
+                        <a href="stock-vue.html"
+                            ><i class="bx bx-book-open"></i>
+                            <span>Informasi Bahan Ajar</span></a
+                        >
+                    </li>
+                    <li class="active">
+                        <a href="tracking-vue.html"
+                            ><i class="bx bx-bus"></i>
+                            <span>Tracking Pengiriman</span></a
+                        >
+                    </li>
+
+                    <li class="nav-group">
+                        <div class="nav-title">Laporan</div>
+                        <ul>
+                            <li>
+                                <a href="#"
+                                    ><i class="bx bx-line-chart"></i>
+                                    <span>Monitoring Progress DO</span></a
+                                >
+                            </li>
+                            <li>
+                                <a href="#"
+                                    ><i class="bx bx-data"></i>
+                                    <span>Rekap Bahan Ajar</span></a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"
+                            ><i class="bx bx-history"></i>
+                            <span>Histori Transaksi</span></a
+                        >
+                    </li>
+                </ul>
+
+                <div class="sidebar-footer">
+                    <a href="#" id="logoutBtn" class="logout"
+                        ><i class="bx bx-log-out"></i>
+                        <span>Keluar Sistem</span></a
+                    >
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <header class="topbar">
+                    <div class="greeting-box">
+                        <h1>Lacak Pengiriman</h1>
+                        <p>
+                            Pantau rute logistik distribusi bahan ajar
+                            Universitas Terbuka
+                        </p>
+                    </div>
+
+                    <div class="profile-area">
+                        <div class="profile-info">
+                            <strong id="userName">User Name</strong>
+                            <span id="userRole">Role - Lokasi</span>
+                        </div>
+                        <div class="profile-avatar">
+                            <i class="bx bxs-user-circle"></i>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="search-section">
+                    <div class="search-card">
+                        <div class="search-header">
+                            <div>
+                                <h2>
+                                    Cari Status Pengiriman DO (Delivery Order)
+                                </h2>
+                                <p>
+                                    Masukkan nomor DO untuk melihat status
+                                    terbaru paket mahasiswa Anda.
+                                </p>
+                            </div>
+                            <button class="btn-tambah-do" @click="openForm()">
+                                <i class="bx bx-plus"></i>
+                                <span>Tambah DO Baru</span>
+                            </button>
+                        </div>
+
+                        <form @submit.prevent="searchDO()" class="search-form">
+                            <div class="search-input-wrapper">
+                                <i class="bx bx-search-alt"></i>
+                                <input
+                                    type="text"
+                                    v-model="searchQuery"
+                                    placeholder="Contoh: DO2025-001 atau DO2025-002"
+                                    required
+                                />
+                                <button type="submit" class="btn-search">
+                                    <span>Lacak Paket</span>
+                                </button>
+                            </div>
+                        </form>
+                        <div v-if="errorMessage" class="error-msg">
+                            {{ errorMessage }}
+                        </div>
+                    </div>
+                </section>
+
+                <section v-if="searchResult" class="tracking-result-section">
+                    <div class="tracking-grid">
+                        <!-- Data Detail DO -->
+                        <div class="detail-card">
+                            <div class="card-header">
+                                <h3>
+                                    <i class="bx bx-receipt"></i> Informasi
+                                    Pemesanan
+                                </h3>
+                                <span
+                                    class="badge"
+                                    :class="getStatusInfo(searchResult.status).color"
+                                >
+                                    {{ getStatusInfo(searchResult.status).label
+                                    }}
+                                </span>
+                            </div>
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <span class="label"
+                                        >Penerima (Mahasiswa)</span
+                                    >
+                                    <span class="value"
+                                        >{{ searchResult.nama }}</span
+                                    >
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">NIM</span>
+                                    <span class="value"
+                                        >{{ searchResult.nim }}</span
+                                    >
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Nomor DO</span>
+                                    <span class="value"
+                                        >{{ searchResult.noDO }}</span
+                                    >
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Kurir Ekspedisi</span>
+                                    <span class="value"
+                                        >{{ searchResult.ekspedisi }}</span
+                                    >
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">UT-Daerah</span>
+                                    <span class="value"
+                                        >{{ searchResult.upbjj }}</span
+                                    >
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Tanggal Kirim</span>
+                                    <span class="value"
+                                        >{{
+                                        formatDate(searchResult.tanggalKirim)
+                                        }}</span
+                                    >
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Kode Paket</span>
+                                    <span class="value"
+                                        >{{ searchResult.kodePaket }}</span
+                                    >
+                                </div>
+                                <div class="info-item highlight-total">
+                                    <span class="label"
+                                        >Total Pembayaran DO</span
+                                    >
+                                    <strong class="value"
+                                        >{{
+                                        formatCurrency(searchResult.totalHarga)
+                                        }}</strong
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Card -->
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <h3>
+                                    <i class="bx bx-map-alt"></i> Perjalanan
+                                    Paket
+                                </h3>
+                            </div>
+
+                            <!-- Progress Bar -->
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div
+                                        class="progress-fill"
+                                        :style="{ width: getStatusProgress(searchResult.status) + '%' }"
+                                    ></div>
+                                </div>
+                                <div class="progress-labels">
+                                    <span>Dikemas</span>
+                                    <span>Dikirim</span>
+                                    <span>Transit</span>
+                                    <span>Diterima</span>
+                                </div>
+                            </div>
+
+                            <!-- Timeline -->
+                            <div class="timeline">
+                                <div
+                                    v-for="(event, index) in searchResult.timeline"
+                                    :key="index"
+                                    class="timeline-event"
+                                >
+                                    <div
+                                        class="timeline-dot"
+                                        :class="{ 'active': index < searchResult.timeline.length }"
+                                    ></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-status">
+                                            {{ event.status }}
+                                        </div>
+                                        <div class="timeline-datetime">
+                                            {{ formatDate(event.tanggal) }} - {{
+                                            event.jam }}
+                                        </div>
+                                        <div class="timeline-location">
+                                            <i class="bx bx-location-plus"></i>
+                                            {{ event.lokasi }}
+                                        </div>
+                                        <div class="timeline-description">
+                                            {{ event.deskripsi }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Modal Tambah DO -->
+                <div
+                    v-if="showForm"
+                    class="modal-overlay"
+                    @click.self="closeForm()"
+                >
+                    <div class="modal-content modal-do">
+                        <div class="modal-header">
+                            <h2>Tambah Delivery Order Baru</h2>
+                            <i
+                                class="bx bx-x modal-close"
+                                @click="closeForm()"
+                            ></i>
+                        </div>
+                        <div class="modal-body">
+                            <form @submit.prevent="saveDO()">
+                                <div class="form-grid">
+                                    <!-- NIM -->
+                                    <div class="input-group">
+                                        <label>NIM Mahasiswa *</label>
+                                        <input
+                                            type="text"
+                                            v-model="form.nim"
+                                            placeholder="Contoh: 031234567"
+                                            required
+                                        />
+                                    </div>
+
+                                    <!-- Nama -->
+                                    <div class="input-group">
+                                        <label>Nama Mahasiswa *</label>
+                                        <input
+                                            type="text"
+                                            v-model="form.nama"
+                                            placeholder="Contoh: Budi Santoso"
+                                            required
+                                        />
+                                    </div>
+
+                                    <!-- UT-Daerah -->
+                                    <div class="input-group">
+                                        <label>UT-Daerah (UPBJJ) *</label>
+                                        <select
+                                            v-model="form.upbjjId"
+                                            @change="onUpbjjChange()"
+                                            required
+                                        >
+                                            <option value="">
+                                                -- Pilih UT-Daerah --
+                                            </option>
+                                            <option
+                                                v-for="upbjj in upbjjList"
+                                                :key="upbjj.id"
+                                                :value="upbjj.id"
+                                            >
+                                                {{ upbjj.nama }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Paket Bahan Ajar -->
+                                    <div class="input-group">
+                                        <label>Paket Bahan Ajar *</label>
+                                        <select
+                                            v-model="form.kodePaket"
+                                            required
+                                        >
+                                            <option value="">
+                                                -- Pilih Paket --
+                                            </option>
+                                            <option
+                                                v-for="paket in paketList"
+                                                :key="paket.id"
+                                                :value="paket.kodePaket"
+                                            >
+                                                {{ paket.kodePaket }} - {{
+                                                paket.namaPaket }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Tanggal Kirim -->
+                                    <div class="input-group">
+                                        <label>Tanggal Kirim *</label>
+                                        <input
+                                            type="date"
+                                            v-model="form.tanggalKirim"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Detail Paket (muncul jika paket dipilih) -->
+                                <div
+                                    v-if="selectedPaket && selectedPaket.isi"
+                                    class="paket-details"
+                                >
+                                    <h4>
+                                        Detail Isi Paket: {{
+                                        selectedPaket.namaPaket }}
+                                    </h4>
+                                    <div class="paket-items">
+                                        <div
+                                            v-for="(item, index) in selectedPaket.isi"
+                                            :key="index"
+                                            class="paket-item"
+                                        >
+                                            <span class="item-code"
+                                                >{{ item }}</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <h4>Expedisi: {{ form.ekspedisi }}</h4>
+                                    <h4>
+                                        Estimasi Biaya Kirim: {{
+                                        formatCurrency(selectedPaket.harga) }}
+                                    </h4>
+                                </div>
+
+                                <div class="modal-actions">
+                                    <button
+                                        type="button"
+                                        class="btn-secondary"
+                                        @click="closeForm()"
+                                    >
+                                        Batal
+                                    </button>
+                                    <button type="submit" class="btn-primary">
+                                        Simpan DO Baru
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script src="js/tracking.vue.js"></script>
+    </body>
+</html>
